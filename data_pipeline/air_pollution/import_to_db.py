@@ -93,16 +93,20 @@ def load_locations(csv_file):
     with open(csv_file, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            if row.get('location_id'):
-                location_id = int(row['location_id'])
-                if location_id not in locations:
-                    locations[location_id] = {
-                        'latitude': float(row['latitude']),
-                        'longitude': float(row['longitude']),
-                        'elevation': float(row.get('elevation', 0)),
-                        'timezone': row.get('timezone'),
-                        'timezone_abbreviation': row.get('timezone_abbreviation')
-                    }
+            if row.get('location_id') and row.get('latitude'):
+                try:
+                    location_id = int(row['location_id'])
+                    if location_id not in locations:
+                        locations[location_id] = {
+                            'latitude': float(row['latitude']),
+                            'longitude': float(row['longitude']),
+                            'elevation': float(row.get('elevation', 0)),
+                            'timezone': row.get('timezone'),
+                            'timezone_abbreviation': row.get('timezone_abbreviation')
+                        }
+                except (ValueError, TypeError):
+                    # Skip header rows or invalid data
+                    continue
     return locations
 
 def insert_locations(locations):
@@ -139,24 +143,40 @@ def import_pollution_data(csv_file):
     cursor = conn.cursor()
     
     rows = []
-    column_map = {}
     
     with open(csv_file, 'r', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
+        lines = f.readlines()
         
-        # Map CSV columns to database columns
-        if reader.fieldnames:
-            for i, col in enumerate(reader.fieldnames):
-                column_map[col] = i
+        # Find the data header (contains "time" column)
+        data_start_idx = 0
+        for i, line in enumerate(lines):
+            if 'time' in line and 'location_id' in line:
+                data_start_idx = i
+                break
         
+        # Skip to data section and use that header
+        data_lines = lines[data_start_idx:]
+        reader = csv.DictReader(data_lines)
+        
+        row_count = 0
         for row in reader:
-            if not row.get('time'):  # Skip location header rows
+            row_count += 1
+            if row_count == 1:
+                print(f"[DEBUG] First row keys: {list(row.keys())[:5]}")
+                print(f"[DEBUG] Sample values: location_id={row.get('location_id')}, time={row.get('time')}")
+            
+            if not row.get('time'):  # Skip empty rows
                 continue
             
             try:
+                # Rename 'time' column if it has a different name
+                time_value = row.get('time') or row.get('measured_at')
+                if not time_value:
+                    continue
+                    
                 data = (
                     int(row['location_id']),
-                    row['time'],
+                    time_value,
                     parse_value(row.get('pm10 (μg/m³)')),
                     parse_value(row.get('pm2_5 (μg/m³)')),
                     parse_value(row.get('pm1 (μg/m³)')),
@@ -184,8 +204,9 @@ def import_pollution_data(csv_file):
             except (ValueError, KeyError) as e:
                 print(f"⚠ Skipped row: {e}")
     
-    # Batch insert
+    # Batch insert with progress
     if rows:
+        print(f"[INFO] Inserting {len(rows)} rows in batches...")
         execute_batch(cursor, """
             INSERT INTO pollution_data 
             (location_id, measured_at, pm10, pm2_5, pm1, carbon_monoxide, carbon_dioxide,
@@ -195,10 +216,10 @@ def import_pollution_data(csv_file):
              mugwort_pollen, european_aqi, us_aqi)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             ON CONFLICT DO NOTHING;
-        """, rows, page_size=100)
+        """, rows, page_size=1000)
         
         conn.commit()
-        print(f"✓ Imported {len(rows)} records from {csv_file}")
+        print(f"✓ Imported {len(rows)} records from {os.path.basename(csv_file)}")
     
     cursor.close()
     conn.close()
