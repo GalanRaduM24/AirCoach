@@ -1,27 +1,27 @@
 # Air Pollution Data Pipeline
 
-Import historical air quality data for Bucharest into Supabase database.
+Real-time air quality data fetcher using **Google Air Quality API** for Bucharest.
 
 ## Overview
 
-This pipeline imports CSV files containing hourly air pollution measurements from 3 monitoring stations in Bucharest. Data includes particulate matter (PM2.5, PM10), gases (CO, NO2, O3, SO2), pollen counts, UV index, and air quality indices (European AQI, US AQI).
+This pipeline fetches live air quality data from Google's Air Quality API for 6 monitoring locations (one per sector) in Bucharest. Data includes:
+- **Pollutants**: PM2.5, PM10, NO2, O3, SO2, CO
+- **Pollen/Allergens**: Grass, Tree, Weed pollen indices
+- **AQI**: Air Quality Index with health categories
+- **Health Recommendations**: Activity guidance based on air quality
 
-## Data Files
+## Monitoring Locations
 
-Located in `data/`:
+6 locations covering all Bucharest sectors:
 
-| File | Size | Records | Time Range | Metrics |
-|------|------|---------|------------|---------|
-| `full_data_pollution.csv` | 4.23 MB | ~26,000 | Dec 2025 (current) | 20 metrics + AQI indices |
-| `pollution_one_year.csv` | 2.69 MB | ~26,000 | Dec 2024 (historical) | 20 metrics (no AQI) |
-| `open-meteo.csv` | 1.29 MB | ~26,000 | Dec 2024 (historical) | 8 basic metrics |
-
-### Monitoring Locations
-
-3 stations in Bucharest area:
-- **Location 0**: 44.4°N, 26.1°E (elevation 85m)
-- **Location 1**: 44.4°N, 25.9°E (elevation 79m)  
-- **Location 2**: 44.5°N, 26.1°E (elevation 89m)
+| Sector | Location | Coordinates |
+|--------|----------|-------------|
+| 1 | Piața Victoriei | 44.4517°N, 26.0830°E |
+| 2 | Piața Obor | 44.4481°N, 26.1253°E |
+| 3 | Titan | 44.4286°N, 26.1636°E |
+| 4 | Berceni | 44.3817°N, 26.1206°E |
+| 5 | Rahova | 44.4053°N, 26.0685°E |
+| 6 | Drumul Taberei | 44.4242°N, 26.0175°E |
 
 ### Measured Parameters
 
@@ -81,40 +81,106 @@ Run `database/pollution_schema.sql` in Supabase SQL Editor to create:
 
 ## Setup
 
-### 1. Create Database Tables
+### 1. Get Google Air Quality API Key
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select existing
+3. Enable **Air Quality API**
+4. Create API credentials (API Key)
+5. Add to `.env`:
+
+```env
+GOOGLE_AIR_QUALITY_API_KEY=your_google_api_key
+```
+
+### 2. Create Database Tables
 
 ```sql
 -- Run in Supabase SQL Editor
 -- Copy/paste contents from database/pollution_schema.sql
 ```
 
-### 2. Configure Environment
+### 3. Populate Locations
 
-Update `.env` with valid Supabase credentials:
+```sql
+-- Run in Supabase SQL Editor
+-- Copy/paste contents from database/populate_locations.sql
+```
+
+This inserts the 6 Bucharest sector monitoring locations into the database.
+
+### 4. Configure Database
+
+Update `.env` with Supabase credentials:
 
 ```env
 user=postgres.your_project_id
 password=your_password
-host=aws-0-eu-west-1.pooler.supabase.com
+host=aws-1-eu-west-1.pooler.supabase.com
 port=5432
 dbname=postgres
 ```
 
-### 3. Install Dependencies
+### 5. Install Dependencies
 
 ```bash
-pip install psycopg2-binary python-dotenv
+pip install requests psycopg2-binary python-dotenv
 ```
 
 ## Usage
 
-### Import Data
+### Fetch Live Data
+
+Fetch current air quality for all 6 sectors:
 
 ```bash
-python import_to_db.py
+python live_air_quality.py fetch
 ```
 
-**Note:** Import currently has issues with the CSV structure (two-header format). The script needs debugging to properly parse the data section after the location header.
+Output:
+```
+🔄 Fetching live air quality data for Bucharest...
+
+📍 Sector 1 - Piata Victoriei
+   AQI: 42 - Good (pm25)
+   PM2.5: 10.5 μg/m³
+   PM10: 18.2 μg/m³
+   NO2: 12.3 μg/m³
+   O3: 45.6 μg/m³
+   ✓ Saved data for Sector 1 - Piata Victoriei - AQI: 42
+...
+```
+
+### Get Latest Reading
+
+```bash
+python live_air_quality.py latest 3
+```
+
+Output (JSON):
+```json
+{
+  "measured_at": "2025-12-07T10:00:00+00:00",
+  "pm10": 18.2,
+  "pm2_5": 10.5,
+  "co": 250.0,
+  "no2": 12.3,
+  "so2": 2.1,
+  "o3": 45.6,
+  "grass_pollen": 2,
+  "weed_pollen": 1,
+  "aqi": 42
+}
+```
+
+### Schedule with Cron
+
+Run every hour to keep data fresh:
+
+```bash
+# Crontab entry
+0 * * * * cd /path/to/project && python live_air_quality.py fetch
+```
 
 ### Query Data
 
@@ -142,20 +208,49 @@ FROM pollution_data
 GROUP BY location_id;
 ```
 
-## Known Issues
+## Google Air Quality API
 
-⚠️ **Import Script Not Working**
+### Endpoints Used
 
-The CSV files have a two-header structure:
-- Lines 1-4: Location metadata header
-- Line 5+: Data header + measurements
+1. **Current Conditions** (`/v1/currentConditions:lookup`)
+   - Real-time pollutant concentrations
+   - AQI calculation
+   - Dominant pollutant
+   - Health recommendations
 
-Current issue: Script finds the location headers but doesn't parse the data rows correctly. The `time` column is not being detected.
+2. **Pollen Forecast** (`/v1/forecast:lookup`)
+   - Grass, tree, weed pollen indices
+   - 1-5 day forecast
+   - Category labels (None/Low/Moderate/High/Very High)
 
-**Workaround needed:**
-1. Manually split CSV files into location.csv and data.csv
-2. Or fix the CSV parser to handle the dual-header format
-3. Or use a different CSV reading approach (pandas)
+### API Response Example
+
+```json
+{
+  "dateTime": "2025-12-07T10:00:00Z",
+  "indexes": [{
+    "aqi": 42,
+    "category": "Good",
+    "dominantPollutant": "pm25"
+  }],
+  "pollutants": [
+    {"code": "pm25", "concentration": {"value": 10.5, "units": "μg/m³"}},
+    {"code": "pm10", "concentration": {"value": 18.2, "units": "μg/m³"}},
+    {"code": "no2", "concentration": {"value": 12.3, "units": "μg/m³"}},
+    {"code": "o3", "concentration": {"value": 45.6, "units": "μg/m³"}}
+  ],
+  "healthRecommendations": {
+    "generalPopulation": "Air quality is good. Enjoy outdoor activities.",
+    "sensitiveGroups": "Air quality is acceptable."
+  }
+}
+```
+
+### Pricing
+
+- **Free tier**: 1,000 requests/day
+- **Beyond**: ~$0.50 per 1,000 requests
+- 6 locations × 24 hours = 144 requests/day (well within free tier)
 
 ## AQI Categories
 
@@ -211,10 +306,11 @@ CSV files were generated from air quality monitoring APIs (Open-Meteo or similar
 
 ## Files
 
-- `import_to_db.py` - Import script (needs debugging)
-- `database/pollution_schema.sql` - Database schema
-- `data/*.csv` - Source data files (3 CSV files, ~7MB total)
-- `AIR_POLLUTION.md` - This documentation
+- **`live_air_quality.py`** - Main script to fetch live data from Google API
+- **`database/pollution_schema.sql`** - Database schema
+- **`AIR_POLLUTION.md`** - This documentation
+- ~~`import_to_db.py`~~ - Old CSV importer (deprecated)
+- ~~`data/*.csv`~~ - Static files (removed, use live API instead)
 
 ## License
 
