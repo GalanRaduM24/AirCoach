@@ -1,0 +1,154 @@
+{
+    "roads": [
+        {
+            "name": "Calea Victoriei (North)",
+            "description": "Major north-south artery in central Bucharest",
+            "lat": 44.4361,
+            "lon": 26.0970
+        },
+        {
+            "name": "Calea Victoriei (Center)",
+            "description": "Central section near Revolution Square",
+            "lat": 44.4393,
+            "lon": 26.0969
+        },
+        {
+            "name": "Șoseaua Kiseleff",
+            "description": "Main boulevard to Herăstrău Park",
+            "lat": 44.4672,
+            "lon": 26.0823
+        },
+        {
+            "name": "Bulevardul Unirii (West)",
+            "description": "Major east-west boulevard",
+            "lat": 44.4268,
+            "lon": 26.1033
+        },
+        {
+            "name": "Bulevardul Unirii (East)",
+            "description": "Eastern section near Parliament",
+            "lat": 44.4276,
+            "lon": 26.0877
+        },
+        {
+            "name": "Șoseaua Colentina",
+            "description": "Major road to eastern Bucharest",
+            "lat": 44.4513,
+            "lon": 26.1450
+        },
+        {
+            "name": "Șoseaua Pantelimon",
+            "description": "Eastern arterial road",
+            "lat": 44.4325,
+            "lon": 26.1650
+        },
+        {
+            "name": "Șoseaua Mihai Bravu",
+            "description": "Southeast connector",
+            "lat": 44.4158,
+            "lon": 26.1298
+        },
+        {
+            "name": "Bulevardul Basarabia",
+            "description": "Eastern boulevard",
+            "lat": 44.4245,
+            "lon": 26.1445
+        },
+        {
+            "name": "Șoseaua Vitan-Bârzești",
+            "description": "Southern ring road section",
+            "lat": 44.4015,
+            "lon": 26.1235
+        },
+        {
+            "name": "Bulevardul Dimitrie Cantemir",
+            "description": "Southern boulevard",
+            "lat": 44.4085,
+            "lon": 26.1045
+        },
+        {
+            "name": "Șoseaua Olteniței",
+            "description": "Southwest arterial",
+            "lat": 44.3985,
+            "lon": 26.0985
+        },
+        {
+            "name": "Bulevardul Iuliu Maniu",
+            "description": "Western boulevard to airport",
+            "lat": 44.4365,
+            "lon": 26.0325
+        },
+        {
+            "name": "Șoseaua Virtuții",
+            "description": "Western ring road section",
+            "lat": 44.4285,
+            "lon": 26.0145
+        },
+        {
+            "name": "Bulevardul Timișoara",
+            "description": "Western arterial road",
+            "lat": 44.4125,
+            "lon": 26.0445
+        },
+        {
+            "name": "Șoseaua Progresului",
+            "description": "Southwest industrial area",
+            "lat": 44.3885,
+            "lon": 26.0625
+        },
+        {
+            "name": "Bulevardul Gheorghe Șincai",
+            "description": "Southern central boulevard",
+            "lat": 44.4045,
+            "lon": 26.0885
+        },
+        {
+            "name": "Bulevardul Mărășești",
+            "description": "Eastern central boulevard",
+            "lat": 44.4385,
+            "lon": 26.1245
+        },
+        {
+            "name": "Șoseaua Ștefan cel Mare",
+            "description": "Northern arterial road",
+            "lat": 44.4585,
+            "lon": 26.1085
+        },
+        {
+            "name": "Bulevardul Aviatorilor",
+            "description": "Northern boulevard near Herăstrău",
+            "lat": 44.4725,
+            "lon": 26.0925
+        },
+        {
+            "name": "Șoseaua Nordului",
+            "description": "Northern ring road section",
+            "lat": 44.4885,
+            "lon": 26.0785
+        },
+        {
+            "name": "Bulevardul Expozitiei",
+            "description": "Northwest area",
+            "lat": 44.4685,
+            "lon": 26.0525
+        },
+        {
+            "name": "Șoseaua București-Ploiești",
+            "description": "Northern exit to Ploiești",
+            "lat": 44.5125,
+            "lon": 26.0685
+        },
+        {
+            "name": "Bulevardul Magheru",
+            "description": "Central north-south boulevard",
+            "lat": 44.4445,
+            "lon": 26.0945
+        },
+        {
+            "name": "Bulevardul Bratianu",
+            "description": "Central boulevard near University Square",
+            "lat": 44.4365,
+            "lon": 26.1025
+        }
+    ]
+}
