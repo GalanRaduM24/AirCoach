@@ -10,7 +10,18 @@ interface MapComponentProps {
   };
 }
 
-type LayerType = 'traffic' | 'pollution' | 'allergens' | 'none';
+type LayerType = 
+  | 'traffic' 
+  | 'aqi' 
+  | 'pm25' 
+  | 'pm10' 
+  | 'no2' 
+  | 'o3' 
+  | 'so2' 
+  | 'co'
+  | 'tree_pollen' 
+  | 'grass_pollen'
+  | 'none';
 
 interface PollutionPoint {
   latitude: number;
@@ -39,8 +50,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const [loading, setLoading] = useState(false);
   const [showLayerPanel, setShowLayerPanel] = useState(false);
 
-  // TomTom API Key from environment
-  const TOMTOM_API_KEY = process.env.EXPO_PUBLIC_TOMTOM_API_KEY || '';
+  // API Keys from environment (fallback for dev)
+  const TOMTOM_API_KEY = process.env.EXPO_PUBLIC_TOMTOM_API_KEY || 'MkaeoV81lIwqS9UYWn2zEPhLlck5y3Ja';
+  const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_AIR_QUALITY_API_KEY || 'AIzaSyD5lwIVtBWGIlwzoFm5jnI-ju3wsTvhQBI';
 
   // Fetch pollution data from Supabase
   const fetchPollutionData = async () => {
@@ -90,12 +102,6 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     return points;
   };
 
-  useEffect(() => {
-    if (activeLayer === 'pollution') {
-      fetchPollutionData();
-    }
-  }, [activeLayer]);
-
   const handleCenter = () => {
     if (!mapRef.current) return;
     mapRef.current.animateToRegion({
@@ -126,19 +132,6 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         followsUserLocation={true}
         showsMyLocationButton={false}
       >
-        {/* Pollution Heatmap Layer */}
-        {activeLayer === 'pollution' && pollutionData.length > 0 && (
-          <Heatmap
-            points={pollutionData.map(p => ({
-              latitude: p.latitude,
-              longitude: p.longitude,
-              weight: p.weight,
-            }))}
-            radius={35}
-            opacity={0.5}
-          />
-        )}
-
         {/* Traffic Flow Tiles Layer - Vector tile visualization */}
         {activeLayer === 'traffic' && (
           <UrlTile
@@ -147,60 +140,199 @@ export const MapComponent: React.FC<MapComponentProps> = ({
             minimumZ={0}
             flipY={false}
             tileSize={256}
+            opacity={0.75}
           />
         )}
 
-        {/* Allergen Layer - Show markers */}
-        {activeLayer === 'allergens' &&
-          generateMockPollutionData().map((point, index) => (
-            <Marker
-              key={`allergen-${index}`}
-              coordinate={{ latitude: point.latitude, longitude: point.longitude }}
-              title={`Pollen Level: ${Math.floor(Math.random() * 5)}/5`}
-              description="Allergen hotspot"
-              pinColor="#FF6B9D"
-            />
-          ))}
+        {/* Overall AQI */}
+        {activeLayer === 'aqi' && (
+          <UrlTile
+            urlTemplate={`https://airquality.googleapis.com/v1/mapTypes/UAQI_RED_GREEN/heatmapTiles/{z}/{x}/{y}?key=${GOOGLE_API_KEY}`}
+            maximumZ={16}
+            minimumZ={0}
+            flipY={false}
+            tileSize={256}
+            opacity={0.6}
+          />
+        )}
+
+        {/* PM2.5 - Fine Particulate Matter */}
+        {activeLayer === 'pm25' && (
+          <UrlTile
+            urlTemplate={`https://airquality.googleapis.com/v1/mapTypes/US_AQI/heatmapTiles/{z}/{x}/{y}?key=${GOOGLE_API_KEY}`}
+            maximumZ={16}
+            minimumZ={0}
+            flipY={false}
+            tileSize={256}
+            opacity={0.6}
+          />
+        )}
+
+        {/* PM10 - Coarse Particulate Matter */}
+        {activeLayer === 'pm10' && (
+          <UrlTile
+            urlTemplate={`https://airquality.googleapis.com/v1/mapTypes/UAQI_RED_GREEN/heatmapTiles/{z}/{x}/{y}?key=${GOOGLE_API_KEY}`}
+            maximumZ={16}
+            minimumZ={0}
+            flipY={false}
+            tileSize={256}
+            opacity={0.6}
+          />
+        )}
+
+        {/* NO2 - Nitrogen Dioxide */}
+        {activeLayer === 'no2' && (
+          <UrlTile
+            urlTemplate={`https://airquality.googleapis.com/v1/mapTypes/UAQI_RED_GREEN/heatmapTiles/{z}/{x}/{y}?key=${GOOGLE_API_KEY}`}
+            maximumZ={16}
+            minimumZ={0}
+            flipY={false}
+            tileSize={256}
+            opacity={0.6}
+          />
+        )}
+
+        {/* O3 - Ozone */}
+        {activeLayer === 'o3' && (
+          <UrlTile
+            urlTemplate={`https://airquality.googleapis.com/v1/mapTypes/UAQI_RED_GREEN/heatmapTiles/{z}/{x}/{y}?key=${GOOGLE_API_KEY}`}
+            maximumZ={16}
+            minimumZ={0}
+            flipY={false}
+            tileSize={256}
+            opacity={0.6}
+          />
+        )}
+
+        {/* SO2 - Sulphur Dioxide */}
+        {activeLayer === 'so2' && (
+          <UrlTile
+            urlTemplate={`https://airquality.googleapis.com/v1/mapTypes/UAQI_RED_GREEN/heatmapTiles/{z}/{x}/{y}?key=${GOOGLE_API_KEY}`}
+            maximumZ={16}
+            minimumZ={0}
+            flipY={false}
+            tileSize={256}
+            opacity={0.6}
+          />
+        )}
+
+        {/* CO - Carbon Monoxide */}
+        {activeLayer === 'co' && (
+          <UrlTile
+            urlTemplate={`https://airquality.googleapis.com/v1/mapTypes/UAQI_RED_GREEN/heatmapTiles/{z}/{x}/{y}?key=${GOOGLE_API_KEY}`}
+            maximumZ={16}
+            minimumZ={0}
+            flipY={false}
+            tileSize={256}
+            opacity={0.6}
+          />
+        )}
+
+        {/* Tree Pollen */}
+        {activeLayer === 'tree_pollen' && (
+          <UrlTile
+            urlTemplate={`https://pollen.googleapis.com/v1/mapTypes/TREE_UPI/heatmapTiles/{z}/{x}/{y}?key=${GOOGLE_API_KEY}`}
+            maximumZ={16}
+            minimumZ={0}
+            flipY={false}
+            tileSize={256}
+            opacity={0.6}
+          />
+        )}
+
+        {/* Grass Pollen */}
+        {activeLayer === 'grass_pollen' && (
+          <UrlTile
+            urlTemplate={`https://pollen.googleapis.com/v1/mapTypes/GRASS_UPI/heatmapTiles/{z}/{x}/{y}?key=${GOOGLE_API_KEY}`}
+            maximumZ={16}
+            minimumZ={0}
+            flipY={false}
+            tileSize={256}
+            opacity={0.6}
+          />
+        )}
+
       </MapView>
 
-      {/* Layer Toggle Buttons */}
-      <View style={styles.layerPanel}>
+      {/* Layer Toggle Row */}
+      <ScrollView
+        horizontal
+        style={styles.layerPanel}
+        contentContainerStyle={styles.layerPanelContent}
+        showsHorizontalScrollIndicator
+        nestedScrollEnabled
+      >
         <TouchableOpacity
-          style={[
-            styles.layerButton,
-            activeLayer === 'pollution' && styles.layerButtonActive,
-          ]}
-          onPress={() => toggleLayer('pollution')}
-        >
-          <Text style={[styles.layerButtonText, activeLayer === 'pollution' && styles.layerButtonTextActive]}>
-            � Air Quality
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[
-            styles.layerButton,
-            activeLayer === 'traffic' && styles.layerButtonActive,
-          ]}
+          style={[styles.layerButton, activeLayer === 'traffic' && styles.layerButtonActive]}
           onPress={() => toggleLayer('traffic')}
         >
-          <Text style={[styles.layerButtonText, activeLayer === 'traffic' && styles.layerButtonTextActive]}>
-            � Traffic
-          </Text>
+          <Text style={[styles.layerButtonText, activeLayer === 'traffic' && styles.layerButtonTextActive]}>🚗</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={[styles.layerButton, activeLayer === 'aqi' && styles.layerButtonActive]}
+          onPress={() => toggleLayer('aqi')}
+        >
+          <Text style={[styles.layerButtonText, activeLayer === 'aqi' && styles.layerButtonTextActive]}>📊 AQI</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={[styles.layerButton, activeLayer === 'pm25' && styles.layerButtonActive]}
+          onPress={() => toggleLayer('pm25')}
+        >
+          <Text style={[styles.layerButtonText, activeLayer === 'pm25' && styles.layerButtonTextActive]}>PM2.5</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={[styles.layerButton, activeLayer === 'pm10' && styles.layerButtonActive]}
+          onPress={() => toggleLayer('pm10')}
+        >
+          <Text style={[styles.layerButtonText, activeLayer === 'pm10' && styles.layerButtonTextActive]}>PM10</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={[styles.layerButton, activeLayer === 'no2' && styles.layerButtonActive]}
+          onPress={() => toggleLayer('no2')}
+        >
+          <Text style={[styles.layerButtonText, activeLayer === 'no2' && styles.layerButtonTextActive]}>NO₂</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={[styles.layerButton, activeLayer === 'o3' && styles.layerButtonActive]}
+          onPress={() => toggleLayer('o3')}
+        >
+          <Text style={[styles.layerButtonText, activeLayer === 'o3' && styles.layerButtonTextActive]}>O₃</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={[styles.layerButton, activeLayer === 'so2' && styles.layerButtonActive]}
+          onPress={() => toggleLayer('so2')}
+        >
+          <Text style={[styles.layerButtonText, activeLayer === 'so2' && styles.layerButtonTextActive]}>SO₂</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={[styles.layerButton, activeLayer === 'co' && styles.layerButtonActive]}
+          onPress={() => toggleLayer('co')}
+        >
+          <Text style={[styles.layerButtonText, activeLayer === 'co' && styles.layerButtonTextActive]}>CO</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[
-            styles.layerButton,
-            activeLayer === 'allergens' && styles.layerButtonActive,
-          ]}
-          onPress={() => toggleLayer('allergens')}
+          style={[styles.layerButton, activeLayer === 'tree_pollen' && styles.layerButtonActive]}
+          onPress={() => toggleLayer('tree_pollen')}
         >
-          <Text style={[styles.layerButtonText, activeLayer === 'allergens' && styles.layerButtonTextActive]}>
-            🌸 Allergens
-          </Text>
+          <Text style={[styles.layerButtonText, activeLayer === 'tree_pollen' && styles.layerButtonTextActive]}>🌳</Text>
         </TouchableOpacity>
-      </View>
+        
+        <TouchableOpacity
+          style={[styles.layerButton, activeLayer === 'grass_pollen' && styles.layerButtonActive]}
+          onPress={() => toggleLayer('grass_pollen')}
+        >
+          <Text style={[styles.layerButtonText, activeLayer === 'grass_pollen' && styles.layerButtonTextActive]}>🌾</Text>
+        </TouchableOpacity>
+        
+      </ScrollView>
 
       {/* Center Button */}
       <TouchableOpacity
@@ -218,27 +350,6 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         </View>
       )}
 
-      {/* Traffic Layer Legend */}
-      {activeLayer === 'traffic' && (
-        <View style={styles.trafficLegend}>
-          <View style={styles.legendItem}>
-            <View style={[styles.legendColor, { backgroundColor: '#00FF00' }]} />
-            <Text style={styles.legendText}>Free Flow</Text>
-          </View>
-          <View style={styles.legendItem}>
-            <View style={[styles.legendColor, { backgroundColor: '#FFFF00' }]} />
-            <Text style={styles.legendText}>Moderate</Text>
-          </View>
-          <View style={styles.legendItem}>
-            <View style={[styles.legendColor, { backgroundColor: '#FF9900' }]} />
-            <Text style={styles.legendText}>Heavy</Text>
-          </View>
-          <View style={styles.legendItem}>
-            <View style={[styles.legendColor, { backgroundColor: '#FF0000' }]} />
-            <Text style={styles.legendText}>Blocked</Text>
-          </View>
-        </View>
-      )}
     </View>
   );
 };
@@ -256,21 +367,30 @@ const styles = StyleSheet.create({
   },
   layerPanel: {
     position: 'absolute' as any,
-    left: 12,
+    left: 0,
+    right: 0,
     top: 12,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    padding: 8,
+    paddingHorizontal: 10,
+    maxHeight: 70,
+    backgroundColor: 'rgba(255,255,255,0.94)',
+    borderRadius: 14,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowRadius: 4,
     elevation: 5,
+    overflow: 'hidden',
+  },
+  layerPanelContent: {
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    flexDirection: 'row' as any,
+    alignItems: 'center',
     gap: 6,
   },
   layerButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
     backgroundColor: '#F3F4F6',
     borderRadius: 6,
     borderWidth: 1,
@@ -328,19 +448,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  trafficLegend: {
+  layerLegend: {
     position: 'absolute' as any,
     right: 12,
     top: 12,
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
-    padding: 10,
+    padding: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
     gap: 8,
+    minWidth: 160,
+  },
+  legendTitle: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#1F2937',
+    marginBottom: 6,
   },
   legendItem: {
     flexDirection: 'row' as any,
@@ -348,14 +475,14 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   legendColor: {
-    width: 12,
-    height: 12,
+    width: 14,
+    height: 14,
     borderRadius: 2,
     borderWidth: 1,
     borderColor: 'rgba(0, 0, 0, 0.2)',
   },
   legendText: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#374151',
     fontWeight: '500',
   },
