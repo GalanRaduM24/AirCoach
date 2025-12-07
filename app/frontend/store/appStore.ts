@@ -37,6 +37,7 @@ interface AppState {
   hourlyTrend: Array<{ time: string; aqi: number }>;
   devices: any[];
   userLocation: string;
+  setAirQuality: (data: Partial<AirQuality>) => void;
   updateDeviceStatus: (deviceId: number, newStatus: string) => void;
   updateDeviceToggle: (deviceId: number, isOn: boolean) => void;
   setUserLocation: (location: string) => void;
@@ -48,6 +49,11 @@ export const useAppStore = create<AppState>((set) => ({
   hourlyTrend: mockAirQualityData.hourlyTrend,
   devices: mockDevicesData,
   userLocation: 'Bucharest, Romania',
+
+  setAirQuality: (data) =>
+    set((state) => ({
+      airQuality: { ...state.airQuality, ...data, timestamp: data.timestamp || new Date() },
+    })),
 
   updateDeviceStatus: (deviceId, newStatus) =>
     set((state) => ({

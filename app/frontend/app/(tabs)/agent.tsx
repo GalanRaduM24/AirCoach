@@ -134,11 +134,6 @@ export default function AgentScreen() {
       // Format the agent response
       let responseText = data.response || 'No response generated.';
 
-      // Optionally append technical details in smaller text
-      if (data.rowCount !== undefined) {
-        responseText += `\n\n📊 Data: ${data.rowCount} records`;
-      }
-
       const agentMessage = {
         id: (Date.now() + 1).toString(),
         text: responseText,
