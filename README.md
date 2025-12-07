@@ -1,4 +1,3 @@
-```
 # AirCoach: Project Documentation
 **The Intelligence Layer for Urban Health**
 
@@ -623,4 +622,3 @@ AirCoach is not just another map. It is a tool for **Exposure Control**. By maki
 - **API Documentation**: `BACKEND.md`, `RAG.md`, `DATA_PIPELINE.md`
 
 **Built with ❤️ by**: Radu Gălan, Denis Mitică, Răzvan Timofte
-```
