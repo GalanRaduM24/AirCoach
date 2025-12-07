@@ -8,10 +8,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppStore } from '@/store/appStore';
-import { useUserProfileStore } from '@/store/userProfileStore';
 import { MapComponent } from '@/components/MapComponent';
 import { MetricsComponent } from '@/components/MetricsComponent';
-import { PersonalizedAlertComponent } from '@/components/PersonalizedAlertComponent';
 import * as Location from 'expo-location';
 import { SwipeNavigator } from '@/components/SwipeNavigator';
 
@@ -19,7 +17,6 @@ const { width, height } = Dimensions.get('window');
 
 export default function HomeScreen() {
   const { airQuality, sensors } = useAppStore();
-  const { profile } = useUserProfileStore();
   const insets = useSafeAreaInsets();
   const [currentLocation, setCurrentLocation] = useState<{
     latitude: number;
@@ -47,18 +44,6 @@ export default function HomeScreen() {
       <View style={[styles.outer, { paddingTop: insets.top + 6 }]}>
         <View style={styles.innerCard}>
           <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-            {/* Personalized Alert */}
-            <View style={styles.alertContainer}>
-              <PersonalizedAlertComponent
-                aqi={airQuality.aqi}
-                pm25={airQuality.pm25}
-                pm10={airQuality.pm10}
-                temperature={airQuality.temperature}
-                humidity={airQuality.humidity}
-                uvIndex={airQuality.uvIndex}
-              />
-            </View>
-
             {/* Map Section (no swipe) */}
             <View style={styles.mapContainer}>
               <MapComponent
@@ -110,17 +95,12 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    paddingHorizontal: 16,
-  },
-  alertContainer: {
-    paddingTop: 16,
-    paddingBottom: 12,
   },
   mapContainer: {
     height: height * 0.5,
     marginBottom: 12,
   },
   metricsContainer: {
-    paddingBottom: 24,
+    paddingBottom: 100,
   },
 });

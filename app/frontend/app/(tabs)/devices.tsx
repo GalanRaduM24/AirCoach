@@ -38,6 +38,9 @@ export default function DevicesScreen() {
   const DeviceCard = ({ device }: any) => {
     const isOn = device.isOn;
     const gradient = getDeviceGradient(device.type, isOn);
+    const displayStatus = device.type === 'window'
+      ? (isOn ? 'open' : 'closed')
+      : (isOn ? device.status : 'Off');
 
     return (
       <TouchableOpacity
@@ -56,7 +59,7 @@ export default function DevicesScreen() {
           <View style={styles.cardContent}>
             <Text style={[styles.deviceName, !isOn && styles.textOff]}>{device.name}</Text>
             <Text style={[styles.deviceStatus, !isOn && styles.textOff]}>
-              {isOn ? device.status : 'Off'}
+              {displayStatus}
             </Text>
             
             {/* Extra info between status and battery */}

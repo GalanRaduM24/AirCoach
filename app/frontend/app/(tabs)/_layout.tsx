@@ -16,6 +16,10 @@ export default function TabLayout() {
         tabBarActiveTintColor: '#8B5CF6',
         tabBarInactiveTintColor: '#E5E7EB',
         tabBarStyle: {
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
           backgroundColor: '#0B0B0E',
           borderTopWidth: 1,
           borderTopColor: '#111827',
@@ -27,6 +31,7 @@ export default function TabLayout() {
           shadowRadius: 10,
           shadowOffset: { width: 0, height: -2 },
           elevation: 10,
+          zIndex: 10,
         },
         tabBarLabelStyle: {
           fontSize: 11,

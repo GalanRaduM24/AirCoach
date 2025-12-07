@@ -172,15 +172,35 @@ export const PersonalizedAlertComponent = ({
         },
       ]}
     >
-      <Text style={[styles.title, { color: alert.textColor }]}>{alert.title}</Text>
+      <View style={styles.headerRow}>
+        <Text style={[styles.title, { color: alert.textColor }]}>Personal safety</Text>
+        <View style={[styles.badge, { backgroundColor: alert.textColor + '22', borderColor: alert.borderColor }]}
+        >
+          <Text style={[styles.badgeText, { color: alert.textColor }]}>{alert.title}</Text>
+        </View>
+      </View>
+
       <Text style={[styles.message, { color: alert.textColor }]}>{alert.message}</Text>
+
+      {/* Quick factors */}
+      <View style={styles.chipRow}>
+        <View style={[styles.chip, { borderColor: alert.borderColor }]}>
+          <Text style={[styles.chipLabel, { color: alert.textColor }]}>AQI {aqi}</Text>
+        </View>
+        <View style={[styles.chip, { borderColor: alert.borderColor }]}>
+          <Text style={[styles.chipLabel, { color: alert.textColor }]}>PM2.5 {pm25} µg/m³</Text>
+        </View>
+        <View style={[styles.chip, { borderColor: alert.borderColor }]}>
+          <Text style={[styles.chipLabel, { color: alert.textColor }]}>PM10 {pm10} µg/m³</Text>
+        </View>
+      </View>
 
       {/* Risk factors list */}
       {alert.level !== 'safe' && (
         <View style={styles.infoBox}>
-          <Text style={[styles.infoLabel, { color: alert.textColor }]}>Risk Factors:</Text>
+          <Text style={[styles.infoLabel, { color: alert.textColor }]}>Why:</Text>
           <Text style={[styles.infoValue, { color: alert.textColor }]}>
-            • AQI: {aqi} {'\n'}• PM2.5: {pm25} µg/m³ {'\n'}• PM10: {pm10} µg/m³
+            {alert.message}
           </Text>
         </View>
       )}
@@ -190,21 +210,57 @@ export const PersonalizedAlertComponent = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
+    borderWidth: 0,
+    borderRadius: 14,
+    padding: 14,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
   },
   title: {
     fontSize: 16,
     fontWeight: '700',
-    marginBottom: 8,
+  },
+  badge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  badgeText: {
+    fontSize: 12,
+    fontWeight: '700',
   },
   message: {
     fontSize: 14,
     fontWeight: '500',
-    marginBottom: 12,
+    marginTop: 2,
+    marginBottom: 10,
     lineHeight: 20,
+  },
+  chipRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 4,
+  },
+  chip: {
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  chipLabel: {
+    fontSize: 12,
+    fontWeight: '600',
   },
   infoBox: {
     marginTop: 12,

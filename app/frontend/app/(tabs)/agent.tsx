@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { SwipeNavigator } from '@/components/SwipeNavigator';
+import { useAppStore } from '@/store/appStore';
 
 export default function AgentScreen() {
   const [messages, setMessages] = useState<{ id: string; text: string; sender: 'user' | 'agent'; mapsLink?: string }[]>([]);
@@ -12,6 +13,8 @@ export default function AgentScreen() {
   const [loading, setLoading] = useState(false);
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const insets = useSafeAreaInsets();
+  const tabBarOffset = 70 + insets.bottom; // keep input above the tab bar
+  const { airQuality, devices, updateDeviceToggle, updateDeviceStatus } = useAppStore();
 
   const backendBase = process.env.EXPO_PUBLIC_API_BASE_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:4000' : 'http://localhost:4000');
 
@@ -34,6 +37,52 @@ export default function AgentScreen() {
     getLocation();
   }, []);
 
+  const runCleaningRoutine = () => {
+    const actions: string[] = [];
+
+    const windowDevice = devices.find((d) => d.type === 'window');
+    const purifier = devices.find((d) => d.type === 'purifier');
+    const uvLamp = devices.find((d) => d.type === 'uvLamp');
+
+    // Consider air quality before deciding ventilation vs purification
+    const aqi = airQuality?.aqi ?? 0;
+    const pm25 = airQuality?.pm25 ?? 0;
+    const humidity = airQuality?.humidity ?? 0;
+
+    const shouldVentilate = aqi <= 70 && pm25 <= 25 && humidity <= 65;
+
+    if (windowDevice) {
+      if (shouldVentilate) {
+        updateDeviceToggle(windowDevice.id, true);
+        updateDeviceStatus(windowDevice.id, 'open');
+        actions.push('Opened Smart Window for fresh air (AQI is acceptable).');
+      } else {
+        updateDeviceToggle(windowDevice.id, false);
+        updateDeviceStatus(windowDevice.id, 'closed');
+        actions.push('Kept Smart Window closed to avoid bringing in pollution.');
+      }
+    }
+
+    if (purifier) {
+      updateDeviceToggle(purifier.id, true);
+      updateDeviceStatus(purifier.id, 'cleaning');
+      actions.push('Turned on Air Purifier to clean indoor air.');
+    }
+
+    if (uvLamp) {
+      updateDeviceToggle(uvLamp.id, true);
+      updateDeviceStatus(uvLamp.id, 'on');
+      actions.push('Activated UV Lamp for surface sanitation.');
+    }
+
+    if (actions.length === 0) {
+      actions.push('No compatible devices found to automate.');
+    }
+
+    const contextLine = `Context → AQI ${aqi}, PM2.5 ${pm25}µg/m³, Humidity ${humidity}%.`;
+    return `${contextLine}\n${actions.map((a) => `• ${a}`).join('\n')}`;
+  };
+
   const sendMessage = async () => {
     if (!inputText.trim() || loading) return;
 
@@ -47,6 +96,22 @@ export default function AgentScreen() {
     const question = inputText;
     setInputText('');
     setLoading(true);
+
+    const lower = question.toLowerCase();
+    const wantsCleaning = ['clean my house', 'clean the house', 'clean house', 'sanitize', 'disinfect', 'start cleaning'].some((p) => lower.includes(p));
+
+    // Local automation path for cleaning requests
+    if (wantsCleaning) {
+      const result = runCleaningRoutine();
+      const agentMessage = {
+        id: (Date.now() + 1).toString(),
+        text: `🧹 Started cleaning routine.\n${result}`,
+        sender: 'agent' as const,
+      };
+      setMessages((prev) => [...prev, agentMessage]);
+      setLoading(false);
+      return;
+    }
 
     try {
       const res = await fetch(`${backendBase}/agent/chat`, {
@@ -105,7 +170,7 @@ export default function AgentScreen() {
             <View style={styles.container}>
               {/* Messages Area */}
               <ScrollView
-                contentContainerStyle={styles.messagesContainer}
+                contentContainerStyle={[styles.messagesContainer, { paddingBottom: tabBarOffset + 24 }]}
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="handled"
               >
@@ -146,7 +211,7 @@ export default function AgentScreen() {
               </ScrollView>
 
               {/* Input Area */}
-              <View style={styles.inputWrapper}>
+              <View style={[styles.inputWrapper, { paddingBottom: tabBarOffset }]}>
                 <View style={styles.inputContainer}>
                   <TextInput
                     style={styles.input}

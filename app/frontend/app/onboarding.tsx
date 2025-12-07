@@ -10,10 +10,12 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useUserProfileStore, UserProfile } from '@/store/userProfileStore';
 
 export default function OnboardingScreen() {
   const { completeOnboarding } = useUserProfileStore();
+  const router = useRouter();
   const [age, setAge] = useState('30');
   const [hasAsthma, setHasAsthma] = useState(false);
   const [allergies, setAllergies] = useState({
@@ -47,6 +49,9 @@ export default function OnboardingScreen() {
         otherConditions: conditions.heartDisease ? ['heart_disease'] : [],
         medications: [],
       });
+
+      // Move user into the main app after onboarding is completed
+      router.replace('/');
     } catch (error) {
       Alert.alert('Error', 'Failed to save your profile');
     } finally {

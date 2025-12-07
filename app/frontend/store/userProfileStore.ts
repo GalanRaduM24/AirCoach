@@ -39,7 +39,9 @@ export const useUserProfileStore = create<UserProfileState>((set) => ({
     try {
       const stored = await AsyncStorage.getItem('userProfile');
       if (stored) {
-        set({ profile: JSON.parse(stored), isLoading: false });
+        const parsed = JSON.parse(stored);
+        // Force onboarding to run every app launch by resetting the flag while keeping saved health data.
+        set({ profile: { ...parsed, hasCompletedOnboarding: false }, isLoading: false });
       } else {
         set({ profile: DEFAULT_PROFILE, isLoading: false });
       }

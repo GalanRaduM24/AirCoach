@@ -58,9 +58,34 @@ export const useAppStore = create<AppState>((set) => ({
 
   updateDeviceToggle: (deviceId, isOn) =>
     set((state) => ({
-      devices: state.devices.map((device) =>
-        device.id === deviceId ? { ...device, isOn } : device
-      ),
+      devices: state.devices.map((device) => {
+        if (device.id !== deviceId) return device;
+
+        // Ensure UV lamp reports as on/off with a sensible intensity value
+        if (device.type === 'uvLamp') {
+          return {
+            ...device,
+            isOn,
+            status: isOn ? 'on' : 'off',
+            intensity: isOn ? device.intensity ?? 60 : 0,
+          };
+        }
+
+        if (device.type === 'window') {
+          return {
+            ...device,
+            isOn,
+            status: isOn ? 'open' : 'closed',
+          };
+        }
+
+        // Default fallback: toggle on/off and set status accordingly
+        return {
+          ...device,
+          isOn,
+          status: isOn ? (device.status === 'off' ? 'on' : device.status) : 'off',
+        };
+      }),
     })),
 
   setUserLocation: (location) => set({ userLocation: location }),

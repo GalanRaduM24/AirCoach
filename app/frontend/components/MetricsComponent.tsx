@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { PersonalizedAlertComponent } from './PersonalizedAlertComponent';
 
 interface MetricsComponentProps {
   aqi: number;
@@ -14,6 +15,49 @@ interface MetricsComponentProps {
   visibility: number;
 }
 
+const METRIC_INFO: Record<string, { title: string; description: string; ranges: string }> = {
+  pm25: {
+    title: 'PM2.5 (Fine Particles)',
+    description: 'Fine particulate matter less than 2.5 micrometers in diameter. Can penetrate deep into the lungs and enter the bloodstream.',
+    ranges: 'Good: 0-12 | Moderate: 12-35 | Unhealthy: >35',
+  },
+  pm10: {
+    title: 'PM10 (Coarse Particles)',
+    description: 'Inhalable particulate matter less than 10 micrometers in diameter. Can irritate eyes, nose, and throat.',
+    ranges: 'Good: 0-54 | Moderate: 54-154 | Unhealthy: >154',
+  },
+  no2: {
+    title: 'Nitrogen Dioxide (NO₂)',
+    description: 'A gas from burning fuel. Irritates airways and can aggravate respiratory diseases like asthma.',
+    ranges: 'Good: 0-53 | Moderate: 53-100 | Unhealthy: >100',
+  },
+  o3: {
+    title: 'Ozone (O₃)',
+    description: 'Ground-level ozone is a harmful air pollutant created by chemical reactions between oxides of nitrogen and volatile organic compounds.',
+    ranges: 'Good: 0-70 | Moderate: 70-120 | Unhealthy: >120',
+  },
+  temperature: {
+    title: 'Temperature',
+    description: 'Current air temperature.',
+    ranges: 'Comfortable: 18-26°C',
+  },
+  humidity: {
+    title: 'Humidity',
+    description: 'The amount of water vapor in the air. High humidity can make it feel hotter, while low humidity can dry out skin and airways.',
+    ranges: 'Comfortable: 40-60%',
+  },
+  uvIndex: {
+    title: 'UV Index',
+    description: 'Measure of the strength of sunburn-producing ultraviolet radiation.',
+    ranges: 'Low: 0-2 | Moderate: 3-5 | High: 6-7 | Very High: 8-10',
+  },
+  visibility: {
+    title: 'Visibility',
+    description: 'The distance one can clearly see. Reduced by pollution, fog, or haze.',
+    ranges: 'Good: >10km',
+  },
+};
+
 export const MetricsComponent: React.FC<MetricsComponentProps> = ({
   aqi,
   pm25,
@@ -25,6 +69,8 @@ export const MetricsComponent: React.FC<MetricsComponentProps> = ({
   uvIndex,
   visibility,
 }) => {
+  const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
+
   const scaleColor = (value: number, ranges: Array<{ max: number; color: string }>, fallback = '#6B7280') => {
     for (const r of ranges) {
       if (value <= r.max) return r.color;
@@ -106,7 +152,11 @@ export const MetricsComponent: React.FC<MetricsComponentProps> = ({
   const MetricCard = ({ iconName, label, value, unit, metricKey }: { iconName: keyof typeof Ionicons.glyphMap; label: string; value: any; unit: string; metricKey: string }) => {
     const color = getMetricColor(metricKey, Number(value));
     return (
-      <View style={styles.metricCard}>
+      <TouchableOpacity 
+        style={styles.metricCard} 
+        onPress={() => setSelectedMetric(metricKey)}
+        activeOpacity={0.7}
+      >
         <View style={[styles.metricIconCircle, { backgroundColor: `${color}22` }]}>
           <Ionicons name={iconName} size={18} color={color} />
         </View>
@@ -114,7 +164,7 @@ export const MetricsComponent: React.FC<MetricsComponentProps> = ({
           <Text style={styles.metricLabel}>{label}</Text>
           <Text style={styles.metricValue}>{value}<Text style={styles.metricUnit}> {unit}</Text></Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -129,6 +179,18 @@ export const MetricsComponent: React.FC<MetricsComponentProps> = ({
         </View>
       </View>
 
+      {/* Personalized safety metric directly below AQI */}
+      <View style={styles.alertWrapper}>
+        <PersonalizedAlertComponent
+          aqi={aqi}
+          pm25={pm25}
+          pm10={pm10}
+          temperature={temperature}
+          humidity={humidity}
+          uvIndex={uvIndex}
+        />
+      </View>
+
       <View style={styles.metricsGrid}>
         <MetricCard iconName="leaf-outline" label="PM2.5" value={pm25} unit="µg/m³" metricKey="pm25" />
         <MetricCard iconName="cloud-outline" label="PM10" value={pm10} unit="µg/m³" metricKey="pm10" />
@@ -139,6 +201,39 @@ export const MetricsComponent: React.FC<MetricsComponentProps> = ({
         <MetricCard iconName="sunny-outline" label="UV Index" value={uvIndex} unit="" metricKey="uvIndex" />
         <MetricCard iconName="eye-outline" label="Visibility" value={visibility} unit="km" metricKey="visibility" />
       </View>
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={!!selectedMetric}
+        onRequestClose={() => setSelectedMetric(null)}
+      >
+        <Pressable style={styles.modalOverlay} onPress={() => setSelectedMetric(null)}>
+          <Pressable style={styles.modalContent} onPress={e => e.stopPropagation()}>
+            {selectedMetric && METRIC_INFO[selectedMetric] && (
+              <>
+                <View style={styles.modalHeader}>
+                  <Text style={styles.modalTitle}>{METRIC_INFO[selectedMetric].title}</Text>
+                  <TouchableOpacity onPress={() => setSelectedMetric(null)}>
+                    <Ionicons name="close-circle" size={24} color="#9CA3AF" />
+                  </TouchableOpacity>
+                </View>
+                
+                <Text style={styles.modalDescription}>
+                  {METRIC_INFO[selectedMetric].description}
+                </Text>
+                
+                {METRIC_INFO[selectedMetric].ranges && (
+                  <View style={styles.rangeContainer}>
+                    <Text style={styles.rangeTitle}>Ranges:</Text>
+                    <Text style={styles.rangeText}>{METRIC_INFO[selectedMetric].ranges}</Text>
+                  </View>
+                )}
+              </>
+            )}
+          </Pressable>
+        </Pressable>
+      </Modal>
     </View>
   );
 };
@@ -160,6 +255,10 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
+  },
+  alertWrapper: {
+    marginHorizontal: 16,
+    marginBottom: 12,
   },
   aqiLabel: {
     fontSize: 13,
@@ -237,5 +336,57 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#9CA3AF',
     fontWeight: '500',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 24,
+    width: '100%',
+    maxWidth: 340,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1F2937',
+  },
+  modalDescription: {
+    fontSize: 14,
+    color: '#4B5563',
+    lineHeight: 22,
+    marginBottom: 16,
+  },
+  rangeContainer: {
+    backgroundColor: '#F3F4F6',
+    padding: 12,
+    borderRadius: 12,
+  },
+  rangeTitle: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#374151',
+    marginBottom: 4,
+  },
+  rangeText: {
+    fontSize: 12,
+    color: '#4B5563',
+    lineHeight: 18,
   },
 });
