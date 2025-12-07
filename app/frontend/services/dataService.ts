@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const SUPABASE_URL = 'https://aws-1-eu-west-1.pooler.supabase.com';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // Add your anon key to .env
+const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL || 'https://aws-1-eu-west-1.pooler.supabase.com';
+const SUPABASE_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || '';
 
-const TOMTOM_API_KEY = 'MkaeoV81lIwqS9UYWn2zEPhLlck5y3Ja';
-const GOOGLE_API_KEY = 'AIzaSyD5lwIVtBWGIlwzoFm5jnI-ju3wsTvhQBI';
+const TOMTOM_API_KEY = process.env.EXPO_PUBLIC_TOMTOM_API_KEY || '';
+const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_AIR_QUALITY_API_KEY || '';
 
 export interface PollutionData {
   latitude: number;

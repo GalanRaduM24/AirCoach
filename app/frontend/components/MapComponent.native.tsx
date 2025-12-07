@@ -39,8 +39,8 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const [loading, setLoading] = useState(false);
   const [showLayerPanel, setShowLayerPanel] = useState(false);
 
-  // TomTom API Key
-  const TOMTOM_API_KEY = 'MkaeoV81lIwqS9UYWn2zEPhLlck5y3Ja';
+  // TomTom API Key from environment
+  const TOMTOM_API_KEY = process.env.EXPO_PUBLIC_TOMTOM_API_KEY || '';
 
   // Fetch pollution data from Supabase
   const fetchPollutionData = async () => {
