@@ -1,0 +1,808 @@
+{
+  "description": "Grid-based sampling points across Bucharest for comprehensive traffic coverage",
+  "grid_spacing_degrees": 0.01,
+  "grid_spacing_meters": 1000,
+  "total_points": 480,
+  "roads": [
+    {
+      "name": "Grid Point 1",
+      "description": "Sampling point at grid position (0, 0)",
+      "lat": 44.34,
+      "lon": 25.98,
+      "grid_x": 0,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 2",
+      "description": "Sampling point at grid position (0, 1)",
+      "lat": 44.34,
+      "lon": 25.99,
+      "grid_x": 1,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 3",
+      "description": "Sampling point at grid position (0, 2)",
+      "lat": 44.34,
+      "lon": 26.0,
+      "grid_x": 2,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 4",
+      "description": "Sampling point at grid position (0, 3)",
+      "lat": 44.34,
+      "lon": 26.01,
+      "grid_x": 3,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 5",
+      "description": "Sampling point at grid position (0, 4)",
+      "lat": 44.34,
+      "lon": 26.02,
+      "grid_x": 4,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 6",
+      "description": "Sampling point at grid position (0, 5)",
+      "lat": 44.34,
+      "lon": 26.03,
+      "grid_x": 5,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 7",
+      "description": "Sampling point at grid position (0, 6)",
+      "lat": 44.34,
+      "lon": 26.04,
+      "grid_x": 6,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 8",
+      "description": "Sampling point at grid position (0, 7)",
+      "lat": 44.34,
+      "lon": 26.05,
+      "grid_x": 7,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 9",
+      "description": "Sampling point at grid position (0, 8)",
+      "lat": 44.34,
+      "lon": 26.06,
+      "grid_x": 8,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 10",
+      "description": "Sampling point at grid position (0, 9)",
+      "lat": 44.34,
+      "lon": 26.07,
+      "grid_x": 9,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 11",
+      "description": "Sampling point at grid position (0, 10)",
+      "lat": 44.34,
+      "lon": 26.08,
+      "grid_x": 10,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 12",
+      "description": "Sampling point at grid position (0, 11)",
+      "lat": 44.34,
+      "lon": 26.09,
+      "grid_x": 11,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 13",
+      "description": "Sampling point at grid position (0, 12)",
+      "lat": 44.34,
+      "lon": 26.1,
+      "grid_x": 12,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 14",
+      "description": "Sampling point at grid position (0, 13)",
+      "lat": 44.34,
+      "lon": 26.11,
+      "grid_x": 13,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 15",
+      "description": "Sampling point at grid position (0, 14)",
+      "lat": 44.34,
+      "lon": 26.12,
+      "grid_x": 14,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 16",
+      "description": "Sampling point at grid position (0, 15)",
+      "lat": 44.34,
+      "lon": 26.13,
+      "grid_x": 15,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 17",
+      "description": "Sampling point at grid position (0, 16)",
+      "lat": 44.34,
+      "lon": 26.14,
+      "grid_x": 16,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 18",
+      "description": "Sampling point at grid position (0, 17)",
+      "lat": 44.34,
+      "lon": 26.15,
+      "grid_x": 17,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 19",
+      "description": "Sampling point at grid position (0, 18)",
+      "lat": 44.34,
+      "lon": 26.16,
+      "grid_x": 18,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 20",
+      "description": "Sampling point at grid position (0, 19)",
+      "lat": 44.34,
+      "lon": 26.17,
+      "grid_x": 19,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 21",
+      "description": "Sampling point at grid position (0, 20)",
+      "lat": 44.34,
+      "lon": 26.18,
+      "grid_x": 20,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 22",
+      "description": "Sampling point at grid position (0, 21)",
+      "lat": 44.34,
+      "lon": 26.19,
+      "grid_x": 21,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 23",
+      "description": "Sampling point at grid position (0, 22)",
+      "lat": 44.34,
+      "lon": 26.2,
+      "grid_x": 22,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 24",
+      "description": "Sampling point at grid position (0, 23)",
+      "lat": 44.34,
+      "lon": 26.21,
+      "grid_x": 23,
+      "grid_y": 0
+    },
+    {
+      "name": "Grid Point 25",
+      "description": "Sampling point at grid position (1, 0)",
+      "lat": 44.35,
+      "lon": 25.98,
+      "grid_x": 0,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 26",
+      "description": "Sampling point at grid position (1, 1)",
+      "lat": 44.35,
+      "lon": 25.99,
+      "grid_x": 1,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 27",
+      "description": "Sampling point at grid position (1, 2)",
+      "lat": 44.35,
+      "lon": 26.0,
+      "grid_x": 2,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 28",
+      "description": "Sampling point at grid position (1, 3)",
+      "lat": 44.35,
+      "lon": 26.01,
+      "grid_x": 3,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 29",
+      "description": "Sampling point at grid position (1, 4)",
+      "lat": 44.35,
+      "lon": 26.02,
+      "grid_x": 4,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 30",
+      "description": "Sampling point at grid position (1, 5)",
+      "lat": 44.35,
+      "lon": 26.03,
+      "grid_x": 5,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 31",
+      "description": "Sampling point at grid position (1, 6)",
+      "lat": 44.35,
+      "lon": 26.04,
+      "grid_x": 6,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 32",
+      "description": "Sampling point at grid position (1, 7)",
+      "lat": 44.35,
+      "lon": 26.05,
+      "grid_x": 7,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 33",
+      "description": "Sampling point at grid position (1, 8)",
+      "lat": 44.35,
+      "lon": 26.06,
+      "grid_x": 8,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 34",
+      "description": "Sampling point at grid position (1, 9)",
+      "lat": 44.35,
+      "lon": 26.07,
+      "grid_x": 9,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 35",
+      "description": "Sampling point at grid position (1, 10)",
+      "lat": 44.35,
+      "lon": 26.08,
+      "grid_x": 10,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 36",
+      "description": "Sampling point at grid position (1, 11)",
+      "lat": 44.35,
+      "lon": 26.09,
+      "grid_x": 11,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 37",
+      "description": "Sampling point at grid position (1, 12)",
+      "lat": 44.35,
+      "lon": 26.1,
+      "grid_x": 12,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 38",
+      "description": "Sampling point at grid position (1, 13)",
+      "lat": 44.35,
+      "lon": 26.11,
+      "grid_x": 13,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 39",
+      "description": "Sampling point at grid position (1, 14)",
+      "lat": 44.35,
+      "lon": 26.12,
+      "grid_x": 14,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 40",
+      "description": "Sampling point at grid position (1, 15)",
+      "lat": 44.35,
+      "lon": 26.13,
+      "grid_x": 15,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 41",
+      "description": "Sampling point at grid position (1, 16)",
+      "lat": 44.35,
+      "lon": 26.14,
+      "grid_x": 16,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 42",
+      "description": "Sampling point at grid position (1, 17)",
+      "lat": 44.35,
+      "lon": 26.15,
+      "grid_x": 17,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 43",
+      "description": "Sampling point at grid position (1, 18)",
+      "lat": 44.35,
+      "lon": 26.16,
+      "grid_x": 18,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 44",
+      "description": "Sampling point at grid position (1, 19)",
+      "lat": 44.35,
+      "lon": 26.17,
+      "grid_x": 19,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 45",
+      "description": "Sampling point at grid position (1, 20)",
+      "lat": 44.35,
+      "lon": 26.18,
+      "grid_x": 20,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 46",
+      "description": "Sampling point at grid position (1, 21)",
+      "lat": 44.35,
+      "lon": 26.19,
+      "grid_x": 21,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 47",
+      "description": "Sampling point at grid position (1, 22)",
+      "lat": 44.35,
+      "lon": 26.2,
+      "grid_x": 22,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 48",
+      "description": "Sampling point at grid position (1, 23)",
+      "lat": 44.35,
+      "lon": 26.21,
+      "grid_x": 23,
+      "grid_y": 1
+    },
+    {
+      "name": "Grid Point 49",
+      "description": "Sampling point at grid position (2, 0)",
+      "lat": 44.36,
+      "lon": 25.98,
+      "grid_x": 0,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 50",
+      "description": "Sampling point at grid position (2, 1)",
+      "lat": 44.36,
+      "lon": 25.99,
+      "grid_x": 1,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 51",
+      "description": "Sampling point at grid position (2, 2)",
+      "lat": 44.36,
+      "lon": 26.0,
+      "grid_x": 2,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 52",
+      "description": "Sampling point at grid position (2, 3)",
+      "lat": 44.36,
+      "lon": 26.01,
+      "grid_x": 3,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 53",
+      "description": "Sampling point at grid position (2, 4)",
+      "lat": 44.36,
+      "lon": 26.02,
+      "grid_x": 4,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 54",
+      "description": "Sampling point at grid position (2, 5)",
+      "lat": 44.36,
+      "lon": 26.03,
+      "grid_x": 5,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 55",
+      "description": "Sampling point at grid position (2, 6)",
+      "lat": 44.36,
+      "lon": 26.04,
+      "grid_x": 6,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 56",
+      "description": "Sampling point at grid position (2, 7)",
+      "lat": 44.36,
+      "lon": 26.05,
+      "grid_x": 7,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 57",
+      "description": "Sampling point at grid position (2, 8)",
+      "lat": 44.36,
+      "lon": 26.06,
+      "grid_x": 8,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 58",
+      "description": "Sampling point at grid position (2, 9)",
+      "lat": 44.36,
+      "lon": 26.07,
+      "grid_x": 9,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 59",
+      "description": "Sampling point at grid position (2, 10)",
+      "lat": 44.36,
+      "lon": 26.08,
+      "grid_x": 10,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 60",
+      "description": "Sampling point at grid position (2, 11)",
+      "lat": 44.36,
+      "lon": 26.09,
+      "grid_x": 11,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 61",
+      "description": "Sampling point at grid position (2, 12)",
+      "lat": 44.36,
+      "lon": 26.1,
+      "grid_x": 12,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 62",
+      "description": "Sampling point at grid position (2, 13)",
+      "lat": 44.36,
+      "lon": 26.11,
+      "grid_x": 13,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 63",
+      "description": "Sampling point at grid position (2, 14)",
+      "lat": 44.36,
+      "lon": 26.12,
+      "grid_x": 14,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 64",
+      "description": "Sampling point at grid position (2, 15)",
+      "lat": 44.36,
+      "lon": 26.13,
+      "grid_x": 15,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 65",
+      "description": "Sampling point at grid position (2, 16)",
+      "lat": 44.36,
+      "lon": 26.14,
+      "grid_x": 16,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 66",
+      "description": "Sampling point at grid position (2, 17)",
+      "lat": 44.36,
+      "lon": 26.15,
+      "grid_x": 17,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 67",
+      "description": "Sampling point at grid position (2, 18)",
+      "lat": 44.36,
+      "lon": 26.16,
+      "grid_x": 18,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 68",
+      "description": "Sampling point at grid position (2, 19)",
+      "lat": 44.36,
+      "lon": 26.17,
+      "grid_x": 19,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 69",
+      "description": "Sampling point at grid position (2, 20)",
+      "lat": 44.36,
+      "lon": 26.18,
+      "grid_x": 20,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 70",
+      "description": "Sampling point at grid position (2, 21)",
+      "lat": 44.36,
+      "lon": 26.19,
+      "grid_x": 21,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 71",
+      "description": "Sampling point at grid position (2, 22)",
+      "lat": 44.36,
+      "lon": 26.2,
+      "grid_x": 22,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 72",
+      "description": "Sampling point at grid position (2, 23)",
+      "lat": 44.36,
+      "lon": 26.21,
+      "grid_x": 23,
+      "grid_y": 2
+    },
+    {
+      "name": "Grid Point 73",
+      "description": "Sampling point at grid position (3, 0)",
+      "lat": 44.37,
+      "lon": 25.98,
+      "grid_x": 0,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 74",
+      "description": "Sampling point at grid position (3, 1)",
+      "lat": 44.37,
+      "lon": 25.99,
+      "grid_x": 1,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 75",
+      "description": "Sampling point at grid position (3, 2)",
+      "lat": 44.37,
+      "lon": 26.0,
+      "grid_x": 2,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 76",
+      "description": "Sampling point at grid position (3, 3)",
+      "lat": 44.37,
+      "lon": 26.01,
+      "grid_x": 3,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 77",
+      "description": "Sampling point at grid position (3, 4)",
+      "lat": 44.37,
+      "lon": 26.02,
+      "grid_x": 4,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 78",
+      "description": "Sampling point at grid position (3, 5)",
+      "lat": 44.37,
+      "lon": 26.03,
+      "grid_x": 5,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 79",
+      "description": "Sampling point at grid position (3, 6)",
+      "lat": 44.37,
+      "lon": 26.04,
+      "grid_x": 6,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 80",
+      "description": "Sampling point at grid position (3, 7)",
+      "lat": 44.37,
+      "lon": 26.05,
+      "grid_x": 7,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 81",
+      "description": "Sampling point at grid position (3, 8)",
+      "lat": 44.37,
+      "lon": 26.06,
+      "grid_x": 8,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 82",
+      "description": "Sampling point at grid position (3, 9)",
+      "lat": 44.37,
+      "lon": 26.07,
+      "grid_x": 9,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 83",
+      "description": "Sampling point at grid position (3, 10)",
+      "lat": 44.37,
+      "lon": 26.08,
+      "grid_x": 10,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 84",
+      "description": "Sampling point at grid position (3, 11)",
+      "lat": 44.37,
+      "lon": 26.09,
+      "grid_x": 11,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 85",
+      "description": "Sampling point at grid position (3, 12)",
+      "lat": 44.37,
+      "lon": 26.1,
+      "grid_x": 12,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 86",
+      "description": "Sampling point at grid position (3, 13)",
+      "lat": 44.37,
+      "lon": 26.11,
+      "grid_x": 13,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 87",
+      "description": "Sampling point at grid position (3, 14)",
+      "lat": 44.37,
+      "lon": 26.12,
+      "grid_x": 14,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 88",
+      "description": "Sampling point at grid position (3, 15)",
+      "lat": 44.37,
+      "lon": 26.13,
+      "grid_x": 15,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 89",
+      "description": "Sampling point at grid position (3, 16)",
+      "lat": 44.37,
+      "lon": 26.14,
+      "grid_x": 16,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 90",
+      "description": "Sampling point at grid position (3, 17)",
+      "lat": 44.37,
+      "lon": 26.15,
+      "grid_x": 17,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 91",
+      "description": "Sampling point at grid position (3, 18)",
+      "lat": 44.37,
+      "lon": 26.16,
+      "grid_x": 18,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 92",
+      "description": "Sampling point at grid position (3, 19)",
+      "lat": 44.37,
+      "lon": 26.17,
+      "grid_x": 19,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 93",
+      "description": "Sampling point at grid position (3, 20)",
+      "lat": 44.37,
+      "lon": 26.18,
+      "grid_x": 20,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 94",
+      "description": "Sampling point at grid position (3, 21)",
+      "lat": 44.37,
+      "lon": 26.19,
+      "grid_x": 21,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 95",
+      "description": "Sampling point at grid position (3, 22)",
+      "lat": 44.37,
+      "lon": 26.2,
+      "grid_x": 22,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 96",
+      "description": "Sampling point at grid position (3, 23)",
+      "lat": 44.37,
+      "lon": 26.21,
+      "grid_x": 23,
+      "grid_y": 3
+    },
+    {
+      "name": "Grid Point 97",
+      "description": "Sampling point at grid position (4, 0)",
+      "lat": 44.38,
+      "lon": 25.98,
+      "grid_x": 0,
+      "grid_y": 4
+    },
+    {
+      "name": "Grid Point 98",
+      "description": "Sampling point at grid position (4, 1)",
+      "lat": 44.38,
+      "lon": 25.99,
+      "grid_x": 1,
+      "grid_y": 4
+    },
+    {
+      "name": "Grid Point 99",
+      "description": "Sampling point at grid position (4, 2)",
+      "lat": 44.38,
+      "lon": 26.0,
+      "grid_x": 2,
+      "grid_y": 4
+    },
+    {
+      "name": "Grid Point 100",
+      "description": "Sampling point at grid position (4, 3)",
+      "lat": 44.38,
+      "lon": 26.01,
+      "grid_x": 3,
+      "grid_y": 4
+    }
+  ]
+}
