@@ -597,21 +597,21 @@ function getMetricColor(metric, value) {
 
 AirCoach is not just another map. It is a tool for **Exposure Control**. By making the invisible visible and the complex simple, we empower citizens to reclaim their right to fresh air.
 
-**What Makes Us Different**:
-- ✅ **Hyperlocal Precision**: 1,000 monitoring points (100× more than traditional systems)
-- ✅ **Causal Intelligence**: We explain *why* the air is bad (traffic, construction, weather)
-- ✅ **Predictive Power**: 24-hour forecasts with minute-level granularity
-- ✅ **Personalized Health**: Alerts tailored to asthma, allergies, age, and conditions
-- ✅ **Agentic AI**: Natural conversation, not just data visualization
+**Key Distinctions**:
+- **Hyperlocal Precision**: 1,000 monitoring points (100× more than traditional systems)
+- **Causal Intelligence**: Explaining the root causes behind air quality shifts (traffic, construction, weather)
+- **Predictive Power**: 24-hour forecasts with minute-level granularity
+- **Personalized Health**: Alerts tailored to asthma, allergies, age, and individual conditions
+- **Agentic AI**: Natural conversation and actionable advice, not just raw data visualization
 
-**Technical Innovation**:
-- 🚀 Real-time data pipelines processing 1M+ data points daily
-- 🧠 Google Gemini AI with medical RAG knowledge
-- 🗺️ Semantic search via vector embeddings (pgvector)
-- 📱 Cross-platform React Native (iOS, Android, Web)
-- 🔒 Privacy-first architecture (health data never leaves device)
+**Technical Innovations**:
+- Real-time data pipelines processing 1M+ data points daily
+- Google Gemini AI with medical RAG knowledge
+- Semantic search via vector embeddings (pgvector)
+- Cross-platform React Native (iOS, Android, Web)
+- Privacy-first architecture (health data remains on-device)
 
-**The Bottom Line**: We transform citizens from passive victims of pollution into active decision-makers equipped with the world's most advanced urban health intelligence system.
+**The Bottom Line**: Transforming citizens from passive victims of pollution into active decision-makers equipped with an advanced urban health intelligence platform.
 
 ---
 
@@ -621,4 +621,4 @@ AirCoach is not just another map. It is a tool for **Exposure Control**. By maki
 - **Live Demo**: Coming soon
 - **API Documentation**: `BACKEND.md`, `RAG.md`, `DATA_PIPELINE.md`
 
-**Built with ❤️ by**: Radu Gălan, Denis Mitică, Răzvan Timofte
+**Built by**: Radu Gălan, Denis Mitică, Răzvan Timofte
